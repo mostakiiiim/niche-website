@@ -1,4 +1,66 @@
-# Getting Started with Create React App
+# ID
+A simple react based project for a Sunglass Provider
+
+
+# Project Description
+- Get the best glasses with affordable price
+
+- Site created with simple React Js and React-Bootstrap and React-Hook-Form
+
+- Separate Dashboards for Admin and User
+
+- Admin can add, remove or Delete any Products or Orders
+
+- Users can place order and review the orders in my orders route
+
+- User can give give that will show in the homepage
+
+- AdminRoute implemented
+
+- Login to navigate more detailed routes
+
+- Hosted on Firebase
+
+- MongoDB Atlast Used Database
+
+- NOSQL database
+
+- DataBase Hosted on Heroku
+
+
+
+
+
+## Live Site Link
+https://niche-website-cb3be.web.app/home
+
+## Live Database Link
+
+https://cryptic-ravine-81087.herokuapp.com/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -67,4 +129,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `yarn build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->

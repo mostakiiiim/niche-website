@@ -11,7 +11,7 @@ const PlaceOrder = () => {
     const history = useHistory();
     const redirect_uri = '/dashboard/myOrders'
     useEffect(() => {
-        fetch(`http://localhost:5000/products/${productId}`)
+        fetch(`https://cryptic-ravine-81087.herokuapp.com/products/${productId}`)
             .then(res => res.json())
             .then(data => setProduct(data))
 
@@ -21,7 +21,7 @@ const PlaceOrder = () => {
     const onSubmit = data => {
 
         console.log(data);
-        axios.post('http://localhost:5000/orders', data)
+        axios.post('https://cryptic-ravine-81087.herokuapp.com/orders', data)
             .then(res => {
                 if (res.data.insertedId) {
                     alert('added successfully');
@@ -30,9 +30,11 @@ const PlaceOrder = () => {
                 }
             })
     }
-
+    const orderPage = {
+        overflow: 'hidden'
+    }
     return (
-        <div>
+        <div style={orderPage}>
             <h1>Review Order</h1>
             <h3>Package Name: <span className="fw-bold fs-1">{products.name}</span></h3>
 

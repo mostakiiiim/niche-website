@@ -9,7 +9,7 @@ const ManageOrders = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders')
+        fetch('https://cryptic-ravine-81087.herokuapp.com/orders')
             .then(res => res.json())
             .then(data => setOrders(data))
 
@@ -22,8 +22,8 @@ const ManageOrders = () => {
     const handleUpdate = order => {
         const proceed = window.confirm("Are you sure to approve the Order?")
         if (proceed) {
-            order.status = "Approved"
-            const url = `http://localhost:5000/orders/${order._id}`
+            order.status = "Shipped"
+            const url = `https://cryptic-ravine-81087.herokuapp.com/orders/${order._id}`
             fetch(url, {
                 method: 'PUT',
                 headers: {
@@ -56,7 +56,7 @@ const ManageOrders = () => {
 
     const handleDelete = id => {
 
-        const url = `http://localhost:5000/orders/${id}`
+        const url = `https://cryptic-ravine-81087.herokuapp.com/orders/${id}`
 
         fetch(url, {
             method: "DELETE"
@@ -73,12 +73,20 @@ const ManageOrders = () => {
             });
 
     }
+    const pageContainer = {
+        width: "100",
+        overflow: "hidden",
+
+    }
 
     return (
 
-        <>
-            <h1>Manage All Orders</h1>
-            <Table responsive className="mb-5 container">
+        <div className="container" style={pageContainer}>
+            <h1>Manage all orders</h1>
+            <Table responsive="sm" className="mb-5 container">
+
+
+
                 <thead>
                     <tr>
                         <th>Package Name</th>
@@ -87,7 +95,8 @@ const ManageOrders = () => {
                         <th>Number</th>
                         <th>Address</th>
                         <th>Price</th>
-                        <th>Order Status</th>
+                        <th>Admin Action</th>
+                        <th>Admin Status</th>
                         <th className="ps-5">Admin Action</th>
                     </tr>
                 </thead>
@@ -102,12 +111,13 @@ const ManageOrders = () => {
                                 <td>{order.number}</td>
                                 <td>{order.address}</td>
                                 <td>{order.price}</td>
+
                                 <td className="fw-bold">{order.status}</td>
 
                                 <button className="bg-danger text-white" onClick={() => handleDelete(order._id)}>cancel</button>
 
                                 <td>
-                                    {order?.status === "Approved" ?
+                                    {order?.status === "Shipped" ?
                                         <span className="bg-success text-white ps-2 pe-2"> Updated Status</span> :
                                         <button onClick={() => handleUpdate(order)} className="btn bg-warning p-2">Approve?</button>}
                                 </td>
@@ -117,7 +127,7 @@ const ManageOrders = () => {
 
                 </tbody>
             </Table>
-        </>
+        </div>
     );
 };
 

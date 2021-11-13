@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
+import { Spinner, Table } from 'react-bootstrap';
+import useAuth from '../../../hooks/useAuth';
 
 const ManageProducts = () => {
     const [products, setProducts] = useState([])
-
+    const { isLoading } = useAuth();
 
     useEffect(() => {
-        fetch('http://localhost:5000/products')
+        fetch('https://cryptic-ravine-81087.herokuapp.com/products')
             .then(res => res.json())
             .then(data => setProducts(data))
 
     })
     const handleDelete = id => {
 
-        const url = `http://localhost:5000/products/${id}`
+        const url = `https://cryptic-ravine-81087.herokuapp.com/products/${id}`
 
         fetch(url, {
             method: "DELETE"
@@ -30,41 +31,52 @@ const ManageProducts = () => {
             });
 
     }
+
+    const pageContainer = {
+        width: "100",
+        overflow: "hidden"
+    }
+    if (isLoading) {
+        return <Spinner animation="grow" className="mt-5" />
+    }
     return (
-        <Table responsive className="mb-5 container">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Name</th>
-                    <th>Brand</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
+        <div className="container " style={pageContainer}>
+            <h1>Manage Products</h1>
+            <Table responsive className="mb-5 container">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
 
-                    <th>Admin Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    products.map(product =>
-                        <tr key={product._id}>
+                        <th>Admin Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        products.map(product =>
+                            <tr key={product._id}>
 
-                            <td><img src={product.img} style={{ width: 70 }} alt="" /></td>
-                            <td>{product.name}</td>
-                            <td>{product.brand}</td>
-                            <td>{product.price} $</td>
-                            <td>{product.quantity}</td>
-
-
-
-                            <button className="bg-danger text-white" onClick={() => handleDelete(product._id)}>cancel</button>
+                                <td><img src={product.img} style={{ width: 70 }} alt="" /></td>
+                                <td>{product.name}</td>
+                                <td>{product.brand}</td>
+                                <td>{product.price} $</td>
+                                <td>{product.quantity}</td>
 
 
-                        </tr>
-                    )
-                }
 
-            </tbody>
-        </Table>
+                                <button className="bg-danger text-white" onClick={() => handleDelete(product._id)}>cancel</button>
+
+
+                            </tr>
+                        )
+                    }
+
+                </tbody>
+            </Table>
+        </div>
     );
 };
 

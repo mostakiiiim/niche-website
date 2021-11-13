@@ -1,14 +1,13 @@
 import React from 'react';
-import { Spinner } from 'react-bootstrap';
+
 import { useForm } from 'react-hook-form';
-import useAuth from '../../../hooks/useAuth';
 
 const MakeAdmin = () => {
     const { register, handleSubmit, reset } = useForm();
-    const { isLoading } = useAuth();
+
 
     const onSubmit = (data) => {
-        fetch("http://localhost:5000/users", {
+        fetch("https://cryptic-ravine-81087.herokuapp.com/users", {
             method: "PUT",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(data),
@@ -25,7 +24,7 @@ const MakeAdmin = () => {
 
     };
     return (
-        <div>
+        <div className="container">
             <h1>Make me an admin</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <input

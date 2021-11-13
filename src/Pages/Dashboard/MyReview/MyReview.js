@@ -3,6 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import useAuth from '../../../hooks/useAuth';
+import './MyReview.css'
 
 
 const MyReview = () => {
@@ -13,7 +14,7 @@ const MyReview = () => {
     const onSubmit = data => {
 
         console.log(data);
-        axios.post('http://localhost:5000/reviews', data)
+        axios.post('https://cryptic-ravine-81087.herokuapp.com/reviews', data)
             .then(res => {
                 if (res.data.insertedId) {
                     alert('Review Added Successfully');
@@ -25,15 +26,20 @@ const MyReview = () => {
                 console.log(error.response)
             });
     }
+    const pageContainer = {
+        width: "100",
+        overflow: "hidden"
+    }
+
     return (
-        <div className="add-service">
+        <div className="add-service container" style={pageContainer}>
             <h2 className="m-5">Give Us Feedback</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
 
-                <input {...register("user")} defaultValue={user.displayName} placeholder="name" />
+                <input readOnly {...register("user")} defaultValue={user.displayName} placeholder="name" />
 
-                <textarea {...register("description")} placeholder="description" />
-                <input type="number" {...register("rating")} placeholder="Rating" />
+                <textarea className="ms-3 mb-4"  {...register("description")} placeholder="description" />
+                <input type="number" {...register("rating", { min: 0, max: 5 })} placeholder="Rating" />
 
                 <input type="submit" />
             </form>

@@ -15,7 +15,6 @@ import {
     CDBSidebarContent,
     CDBSidebarFooter,
     CDBSidebarHeader,
-    CDBSidebarMenu,
     CDBSidebarMenuItem,
 
 } from 'cdbreact'
@@ -27,71 +26,81 @@ import ManageProducts from './ManageProducts/ManageProducts';
 import MyOrders from './MyOrders/MyOrders';
 import MyReview from './MyReview/MyReview';
 import Pay from './Pay/Pay';
-import { RiDashboardLine } from "react-icons/ri";
-import { GrUserAdmin } from "react-icons/gr";
+
 import useAuth from '../../hooks/useAuth';
 import AdminRoute from '../Login/AdminRoute/AdminRoute';
-import { Spinner } from 'react-bootstrap';
 
 const Dashboard = () => {
-
+    const { logOut } = useAuth();
     let { path, url } = useRouteMatch();
     const { admin } = useAuth();
+    const linkStyle = {
+        textDecoration: 'none',
+        color: 'white'
+
+    }
 
     return (
         <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }} >
             <CDBSidebar textColor="#fff" backgroundColor="#333">
-                <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-                    <a
-                        href="/"
-                        className="text-decoration-none"
-                        style={{ color: 'inherit' }}
-                    >
-                        Sidebar
-                    </a>
+                <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large d-inline">  <NavLink href="/dashboard"
+                    className="text-decoration-none d-inline"
+                    style={{ color: 'inherit' }} to={`${url}`} activeClassName="activeClicked">
+                    <CDBSidebarMenuItem>  Dashboard</CDBSidebarMenuItem>
+                </NavLink></i>}>
+
+
+
+
                 </CDBSidebarHeader>
 
-                <CDBSidebarContent className="sidebar-content">
+                <CDBSidebarContent className="sidebar-content " >
 
-                    <NavLink to={`${url}`} activeClassName="activeClicked">
-                        <CDBSidebarMenuItem>  <RiDashboardLine size={32} />Dashboard</CDBSidebarMenuItem>
-                    </NavLink>
 
                     {
-                        admin ?
-                            <>
-                                <NavLink to={`${url}/makeAdmin`} activeClassName="activeClicked">
-                                    <CDBSidebarMenuItem className="bg-secondary" ><GrUserAdmin size={32} className="text-white" /> Make Admin</CDBSidebarMenuItem>
-                                </NavLink>
-                                <NavLink to={`${url}/addProducts`} activeClassName="activeClicked">
-                                    <CDBSidebarMenuItem icon="table">Add Product</CDBSidebarMenuItem>
-                                </NavLink>
+                        admin &&
+                        <>
+                            <NavLink style={linkStyle} to={`${url}/makeAdmin`} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem icon="table" >Make Admin</CDBSidebarMenuItem>
+                            </NavLink>
+                            <NavLink to={`${url}/addProducts`} style={linkStyle} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem icon="table" >Add Product</CDBSidebarMenuItem>
+                            </NavLink>
 
-                                <NavLink to={`${url}/manageOrders`} activeClassName="activeClicked">
-                                    <CDBSidebarMenuItem icon="table">Manage Orders</CDBSidebarMenuItem>
-                                </NavLink>
-                                <NavLink to={`${url}/manageProducts`} activeClassName="activeClicked">
-                                    <CDBSidebarMenuItem icon="table">Manage Product</CDBSidebarMenuItem>
-                                </NavLink>
-                            </> :
-                            <>
-                                <NavLink to={`${url}/myOrders`} activeClassName="activeClicked">
-                                    <CDBSidebarMenuItem icon="table">My Orders</CDBSidebarMenuItem>
-                                </NavLink>
-                                <NavLink to={`${url}/payment`} activeClassName="activeClicked">
-                                    <CDBSidebarMenuItem icon="table">Make Payment</CDBSidebarMenuItem>
-                                </NavLink>
-                                <NavLink to={`${url}/review`} activeClassName="activeClicked">
-                                    <CDBSidebarMenuItem icon="table">Give Review</CDBSidebarMenuItem>
-                                </NavLink>
+                            <NavLink to={`${url}/manageOrders`} style={linkStyle} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem icon="table">Manage Orders</CDBSidebarMenuItem>
+                            </NavLink>
+                            <NavLink to={`${url}/manageProducts`} style={linkStyle} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem icon="table">Manage Product</CDBSidebarMenuItem>
+                            </NavLink>
+
+                            <button onClick={logOut} style={{ textDecoration: 'none', color: 'red', backgroundColor: "#333333", border: 'none' }} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem icon="chart-line">
+                                    Logout
+                                </CDBSidebarMenuItem>
+                            </button>
+                        </>}
+                    {!admin &&
+                        <>
+                            <NavLink to={`${url}/myOrders`} style={linkStyle} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem icon="table">My Orders</CDBSidebarMenuItem>
+                            </NavLink>
 
 
-                                <NavLink to="/analytics" activeClassName="activeClicked">
-                                    <CDBSidebarMenuItem icon="chart-line">
-                                        Analytics
-                                    </CDBSidebarMenuItem>
-                                </NavLink>
-                            </>
+                            <NavLink to={`${url}/payment`} style={linkStyle} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem icon="table">Make Payment</CDBSidebarMenuItem>
+                            </NavLink>
+                            <NavLink to={`${url}/review`} style={linkStyle} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem icon="table">Give Review</CDBSidebarMenuItem>
+                            </NavLink>
+
+                            <button onClick={logOut} style={{ textDecoration: 'none', color: 'red', backgroundColor: "#333333", border: 'none' }} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem icon="chart-line">
+                                    Logout
+                                </CDBSidebarMenuItem>
+                            </button>
+                        </>
+
                     }
 
 
@@ -130,13 +139,13 @@ const Dashboard = () => {
                 <AdminRoute path={`${path}/manageProducts`}>
                     <ManageProducts></ManageProducts>
                 </AdminRoute>
-                <Route path={`${path}/myOrders`}>
+                <Route exact path={`${path}/myOrders`}>
                     <MyOrders></MyOrders>
                 </Route>
-                <Route path={`${path}/review`}>
+                <Route exact path={`${path}/review`}>
                     <MyReview></MyReview>
                 </Route>
-                <Route path={`${path}/payment`}>
+                <Route exact path={`${path}/payment`}>
                     <Pay></Pay>
                 </Route>
             </Switch>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Col, Container, Row, Spinner } from 'react-bootstrap';
+import { Carousel, Container, ProgressBar, Spinner } from 'react-bootstrap';
 import Rating from 'react-rating';
-import { Link } from 'react-router-dom';
+
 import useAuth from '../../../hooks/useAuth';
 
 const Reviews = () => {
@@ -9,61 +9,78 @@ const Reviews = () => {
     const { isLoading } = useAuth();
 
     useEffect(() => {
-        fetch('http://localhost:5000/reviews')
+        fetch('https://cryptic-ravine-81087.herokuapp.com/reviews')
             .then(res => res.json())
             .then(data => setReviews(data))
     })
     if (isLoading) {
         return <Spinner animation="grow" className="mt-5" />
     }
+    const reviewBg = {
+        backgroundColor: "#F0F8FF"
+    }
     return (
         <>
 
             <Container>
-                <Row className="activities-div " id="srv">
-                    <h1 className="fw-bold mt-5">Our Packages</h1>
-                    <Row xs={1} md={3} className="g-4">
-                        {
 
-                            reviews.map(review =>
-                                <Col>
-                                    <Card className="shadow-lg p-3 mb-5 bg-body rounded">
-
-                                        <Card.Body>
-
-                                            <Card.Text className="text-start">
+                <h1 className="text-center">What clients say about us</h1>
+                <Carousel variant="dark">
 
 
-                                                <h3 className="fw-bold"> {review.user}</h3>
-                                                <h3 className="fw-bold"> {review.description}</h3>
-                                                <Rating
-                                                    emptySymbol="far fa-star"
-                                                    fullSymbol="fas fa-star "
-                                                    initialRating={review.rating}
+                    {
 
-                                                />
+                        reviews.map(review =>
+                            <Carousel.Item key={review._id} interval={3000} >
+                                <div className="text-center m-5 p-5 " style={reviewBg}>
 
-                                                <h3 className="fw-bold"> {review.rating}</h3>
+                                    <Rating
+                                        emptySymbol="far fa-star fs-4"
+                                        fullSymbol="fas fa-star text-warning fs-4"
+                                        initialRating={review.rating}
+
+                                    />
+                                    <h3 className="fw-bold"><span className="text-secondary fs-5">Client Name:</span> <span className="text-info">{review.user}</span> </h3>
+                                    <p className="fw-bold fs-1"> "{review.description}"</p>
 
 
 
+                                </div>
+
+                            </Carousel.Item>
+
+                        )
+
+                    }
 
 
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            )
-
-                        }
 
 
 
-                    </Row>
-                </Row>
+
+                </Carousel>
+                <>
+                    <div className="container">
+                        <div className="row m-5 pt-3">
+                            <div className="col-md-6 d-flex flex-column justify-content-center fw-bold">
+                                <h1>Happy Customers</h1>
+                                <h1>99.6% </h1><span>Positive Reviews</span>
+                            </div>
+                            <div className="col-md-6">
+
+                                <span className="fw-bold ">Excellent</span><ProgressBar animated now={70} /><br />
+                                <span className="fw-bold ">Very Good</span><ProgressBar animated now={75} /><br />
+                                <span className="fw-bold ">Good</span><ProgressBar animated now={40} /><br />
+                                <span className="fw-bold ">Poor</span> <ProgressBar animated now={10} /><br />
+                                <span className="fw-bold ">Bad</span> <ProgressBar animated now={5} />
+
+                            </div>
+                        </div>
+                    </div></>
             </Container>
         </>
     );
 };
+
 
 export default Reviews;

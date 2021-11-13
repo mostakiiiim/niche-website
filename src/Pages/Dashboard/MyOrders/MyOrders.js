@@ -8,13 +8,13 @@ const MyOrders = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders')
+        fetch('https://cryptic-ravine-81087.herokuapp.com/orders')
             .then(res => res.json())
             .then(data => setOrders(data))
     })
     const handleDelete = id => {
 
-        const url = `http://localhost:5000/orders/${id}`
+        const url = `https://cryptic-ravine-81087.herokuapp.com/orders/${id}`
 
         fetch(url, {
             method: "DELETE"
@@ -32,9 +32,13 @@ const MyOrders = () => {
 
     }
     const myOrders = orders.filter(order => order.email === user.email)
+    const pageContainer = {
+        width: "100",
+        overflow: "hidden"
+    }
 
     return (
-        <div className="container">
+        <div className="container " style={pageContainer}>
 
             <h1 className="m-5 p-5">MY ORDERS</h1>
             <Table responsive className="mb-5">
