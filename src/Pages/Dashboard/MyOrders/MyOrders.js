@@ -34,7 +34,7 @@ const MyOrders = () => {
     const myOrders = orders.filter(order => order.email === user.email)
     const pageContainer = {
         width: "100",
-        overflow: "hidden"
+        overflowX: "hidden"
     }
 
     return (

@@ -34,7 +34,7 @@ const ManageProducts = () => {
 
     const pageContainer = {
         width: "100",
-        overflow: "hidden"
+        overflowX: "hidden"
     }
     if (isLoading) {
         return <Spinner animation="grow" className="mt-5" />

@@ -75,7 +75,7 @@ const ManageOrders = () => {
     }
     const pageContainer = {
         width: "100",
-        overflow: "hidden",
+        overflowX: "hidden",
 
     }
 
